@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import { PostType } from "../types";
 import Post from "./Post";
 import SelectedPost from "./SelectedPost";
+import { BASE_BACKEND_URL } from "../utils/constant";
 
 const fetchPosts = async (): Promise<PostType[]> => {
-  const response = await fetch("/api/posts");
+  const response = await fetch(`${BASE_BACKEND_URL}/api/posts`);
 
   if (!response.ok) {
     throw new Error("Failed to fetch posts");

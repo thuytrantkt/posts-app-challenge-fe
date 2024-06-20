@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Comment from "./Comment";
 import { CommentType, PostType } from "../types";
+import { BASE_BACKEND_URL } from "../utils/constant";
 
 const PAGE_SIZE = 2;
 
@@ -13,7 +14,9 @@ const fetchCommentsForPost = async (
     page: pageNumber.toString(),
   });
 
-  const response = await fetch(`/api/posts/${postId}/comments?${params}`);
+  const response = await fetch(
+    `${BASE_BACKEND_URL}/api/posts/${postId}/comments?${params}`
+  );
 
   if (!response.ok) {
     throw new Error("Failed to fetch comments");
