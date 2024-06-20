@@ -33,7 +33,10 @@ const PostsPage = () => {
 
   if (selectedPost) {
     return (
-      <SelectedPost post={selectedPost} setSelectedPost={setSelectedPost} />
+      <SelectedPost
+        post={selectedPost}
+        handleSelectedPostClick={() => setSelectedPost(null)}
+      />
     );
   }
 
@@ -50,7 +53,11 @@ const PostsPage = () => {
         }}
       >
         {posts.map((post) => (
-          <Post key={post.id} post={post} setSelectedPost={setSelectedPost} />
+          <Post
+            key={post.id}
+            post={post}
+            handleSelectedPostClick={() => setSelectedPost(post)}
+          />
         ))}
       </div>
     </div>

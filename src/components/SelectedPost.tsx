@@ -27,10 +27,10 @@ const fetchCommentsForPost = async (
 
 const SelectedPost = ({
   post,
-  setSelectedPost,
+  handleSelectedPostClick,
 }: {
   post: PostType;
-  setSelectedPost: (post: PostType | null) => void;
+  handleSelectedPostClick: () => void;
 }) => {
   const [comments, setComments] = useState<CommentType[]>([]);
 
@@ -57,10 +57,7 @@ const SelectedPost = ({
   return (
     <>
       <div style={{ padding: "20px" }}>
-        <button
-          style={{ cursor: "pointer" }}
-          onClick={() => setSelectedPost(null)}
-        >
+        <button style={{ cursor: "pointer" }} onClick={handleSelectedPostClick}>
           Back
         </button>
         <h2

@@ -3,10 +3,10 @@ import { PostType } from "../types";
 
 const Post = ({
   post,
-  setSelectedPost,
+  handleSelectedPostClick,
 }: {
   post: PostType;
-  setSelectedPost: (post: PostType | null) => void;
+  handleSelectedPostClick: () => void;
 }) => {
   return (
     <div
@@ -17,7 +17,7 @@ const Post = ({
         cursor: "pointer",
         userSelect: "none",
       }}
-      onClick={() => setSelectedPost(post)}
+      onClick={handleSelectedPostClick}
     >
       <h2
         style={{
