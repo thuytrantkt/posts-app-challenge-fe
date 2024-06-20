@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Comment from "./Comment";
 import { CommentType, PostType } from "../types";
-import { BASE_BACKEND_URL } from "../utils/constant";
-
-const PAGE_SIZE = 2;
+import { BASE_BACKEND_URL, PAGE_SIZE } from "../utils/constant";
 
 const fetchCommentsForPost = async (
   postId: number,
@@ -41,17 +39,21 @@ const SelectedPost = ({
     if (hasNextPage) {
       const pagesFetched = comments.length / PAGE_SIZE;
       const nextPage = pagesFetched + 1;
-      fetchCommentsForPost(post.id, nextPage).then((comments) => {
-        setComments((prevComments) => [...prevComments, ...comments]);
-      });
+      fetchCommentsForPost(post.id, nextPage)
+        .then((comments) => {
+          setComments((prevComments) => [...prevComments, ...comments]);
+        })
+        .catch((error) => console.error("Failed to load comments:", error));
     }
   };
 
   // Fetch the first page of comments on mount
   useEffect(() => {
-    fetchCommentsForPost(post.id).then((comments) => {
-      setComments(comments);
-    });
+    fetchCommentsForPost(post.id)
+      .then((comments) => {
+        setComments(comments);
+      })
+      .catch((error) => console.error("Failed to load comments:", error));
   }, [post.id]);
 
   return (
