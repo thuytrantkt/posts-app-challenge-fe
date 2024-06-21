@@ -1,56 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Comment from "../Comment/Comment";
-import { CommentType, PostProps } from "../../types";
-import { BASE_BACKEND_URL, PAGE_SIZE } from "../../utils/constant";
+import { PostProps } from "../../types";
 import { dateFormatted } from "../../utils/date-helper";
 import "./selectedpost.css";
-
-const fetchCommentsForPost = async (
-  postId: number,
-  pageNumber: number = 1
-): Promise<CommentType[]> => {
-  const params = new URLSearchParams({
-    "per-page": PAGE_SIZE.toString(),
-    page: pageNumber.toString(),
-  });
-
-  const response = await fetch(
-    `${BASE_BACKEND_URL}/api/posts/${postId}/comments?${params}`
-  );
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch comments");
-  }
-
-  return response.json();
-};
+import useFetchAPIs from "../../hooks/useFetchAPIs";
 
 const SelectedPost = ({ post, handleSelectedPostClick }: PostProps) => {
-  const { author, commentCount, content, createdAt, id, title } = post;
-  const [comments, setComments] = useState<CommentType[]>([]);
+  const { fetchCommentsForPost, fetchMoreComments, comments, setComments } =
+    useFetchAPIs();
 
-  const hasNextPage = comments.length > 0 && comments.length < commentCount;
+  const { title, content, author, createdAt } = post;
 
-  const fetchMoreComments = () => {
-    if (hasNextPage) {
-      const pagesFetched = comments.length / PAGE_SIZE;
-      const nextPage = pagesFetched + 1;
-      fetchCommentsForPost(id, nextPage)
-        .then((comments) => {
-          setComments((prevComments) => [...prevComments, ...comments]);
-        })
-        .catch((error) => console.error("Failed to load comments:", error));
-    }
-  };
+  const hasNextPage =
+    comments.length > 0 && post && comments.length < post.commentCount;
 
   // Fetch the first page of comments on mount
   useEffect(() => {
-    fetchCommentsForPost(id)
+    fetchCommentsForPost(post.id)
       .then((comments) => {
         setComments(comments);
       })
       .catch((error) => console.error("Failed to load comments:", error));
-  }, [id]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [post.id]);
 
   return (
     <>
@@ -64,7 +36,7 @@ const SelectedPost = ({ post, handleSelectedPostClick }: PostProps) => {
           <strong>Author:</strong> {author}
         </p>
         <p>
-          <strong>Posted on:</strong> {dateFormatted(createdAt)}
+          <strong>Posted on:</strong> {post && dateFormatted(createdAt)}
         </p>
         <div className="selected-post-comment-container">
           {comments.map((comment, index) => (
@@ -76,7 +48,10 @@ const SelectedPost = ({ post, handleSelectedPostClick }: PostProps) => {
           ))}
         </div>
         {hasNextPage && (
-          <button type="submit" onClick={fetchMoreComments}>
+          <button
+            type="submit"
+            onClick={() => fetchMoreComments(hasNextPage, post)}
+          >
             Fetch more comments
           </button>
         )}

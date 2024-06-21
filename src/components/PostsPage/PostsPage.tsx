@@ -1,23 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { PostType } from "../../types";
+import React, { useEffect } from "react";
 import Post from "../Post/Post";
 import SelectedPost from "../SelectedPost/SelectedPost";
-import { BASE_BACKEND_URL } from "../../utils/constant";
 import "./postspage.css";
-
-const fetchPosts = async (): Promise<PostType[]> => {
-  const response = await fetch(`${BASE_BACKEND_URL}/api/posts`);
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch posts");
-  }
-
-  return response.json();
-};
+import useFetchAPIs from "../../hooks/useFetchAPIs";
 
 const PostsPage = () => {
-  const [posts, setPosts] = useState<PostType[]>([]);
-  const [selectedPost, setSelectedPost] = useState<PostType | null>(null);
+  const { fetchPosts, posts, setPosts, selectedPost, setSelectedPost } =
+    useFetchAPIs();
 
   useEffect(() => {
     const loadPosts = async () => {
