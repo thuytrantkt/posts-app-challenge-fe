@@ -14,13 +14,11 @@ const Post = ({ post, handleSelectedPostClick }: PostProps) => {
           <Typography gutterBottom variant="h5" component="h2">
             {title}
           </Typography>
-          <Typography paddingBottom={1} variant="body2" color="text.secondary">
-            {content}
-          </Typography>
-          <Typography paddingBottom={1} variant="body2" color="text.secondary">
+          <Typography paddingBottom={1}>{content}</Typography>
+          <Typography paddingBottom={1}>
             <strong>Author:</strong> {author}
           </Typography>
-          <Typography paddingBottom={1} variant="body2" color="text.secondary">
+          <Typography paddingBottom={1}>
             <strong>Posted on:</strong> {dateFormatted(createdAt)}
           </Typography>
         </CardContent>
