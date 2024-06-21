@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import Comment from "./Comment";
-import { PostProps } from "../types";
-import { dateFormatted } from "../utils/date-helper";
-import useFetchAPIs from "../hooks/useFetchAPIs";
+import Comment from "../../components/Comment/Comment";
+import { PostProps } from "../../types";
+import { dateFormatted } from "../../utils/helpers/date-helper";
+import useFetchAPIs from "../../hooks/useFetchAPIs";
 import { Button, Card, CardContent, Container, Link } from "@mui/material";
 const SelectedPost = ({ post, handleSelectedPostClick }: PostProps) => {
   const { fetchCommentsForPost, fetchMoreComments, comments, setComments } =

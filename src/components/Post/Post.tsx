@@ -1,6 +1,6 @@
 import React from "react";
-import { PostProps } from "../types";
-import { dateFormatted } from "../utils/date-helper";
+import { PostProps } from "../../types";
+import { dateFormatted } from "../../utils/helpers/date-helper";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
@@ -14,14 +14,14 @@ const Post = ({ post, handleSelectedPostClick }: PostProps) => {
           <Typography gutterBottom variant="h5" component="h2">
             {title}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            <p>{content}</p>
-            <p>
-              <strong>Author:</strong> {author}
-            </p>
-            <p>
-              <strong>Posted on:</strong> {dateFormatted(createdAt)}
-            </p>
+          <Typography paddingBottom={1} variant="body2" color="text.secondary">
+            {content}
+          </Typography>
+          <Typography paddingBottom={1} variant="body2" color="text.secondary">
+            <strong>Author:</strong> {author}
+          </Typography>
+          <Typography paddingBottom={1} variant="body2" color="text.secondary">
+            <strong>Posted on:</strong> {dateFormatted(createdAt)}
           </Typography>
         </CardContent>
       </Card>

@@ -1,7 +1,6 @@
-import React from "react";
 import cn from "classnames";
-import { dateFormatted } from "../utils/date-helper";
-import { CommentProps } from "../types";
+import { dateFormatted } from "../../utils/helpers/date-helper";
+import { CommentProps } from "../../types";
 
 const Comment = ({ comment, firstComment }: CommentProps) => {
   const { content, author, createdAt } = comment;

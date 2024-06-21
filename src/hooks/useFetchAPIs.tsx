@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { CommentType, PostType } from "../types";
-import { BASE_BACKEND_URL, PAGE_SIZE } from "../utils/constant";
+import { BASE_BACKEND_URL, PAGE_SIZE } from "../utils/helpers/constant";
 
 const useFetchAPIs = () => {
   const [posts, setPosts] = useState<PostType[]>([]);
