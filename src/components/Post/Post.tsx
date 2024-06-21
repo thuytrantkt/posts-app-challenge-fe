@@ -1,6 +1,6 @@
 import React from "react";
-import { PostType } from "../types";
-import { dateFormatted } from "../utils/date-helper";
+import { PostType } from "../../types";
+import { dateFormatted } from "../../utils/date-helper";
 
 const Post = ({
   post,

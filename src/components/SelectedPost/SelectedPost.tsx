@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Comment from "./Comment";
-import { CommentType, PostType } from "../types";
-import { BASE_BACKEND_URL, PAGE_SIZE } from "../utils/constant";
-import { dateFormatted } from "../utils/date-helper";
+import Comment from "../Comment/Comment";
+import { CommentType, PostType } from "../../types";
+import { BASE_BACKEND_URL, PAGE_SIZE } from "../../utils/constant";
+import { dateFormatted } from "../../utils/date-helper";
 
 const fetchCommentsForPost = async (
   postId: number,

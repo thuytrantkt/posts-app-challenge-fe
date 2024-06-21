@@ -1,6 +1,6 @@
 import React from "react";
-import { CommentType } from "../types";
-import { dateFormatted } from "../utils/date-helper";
+import { CommentType } from "../../types";
+import { dateFormatted } from "../../utils/date-helper";
 
 const Comment = ({
   comment,
