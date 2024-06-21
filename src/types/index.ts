@@ -21,3 +21,8 @@ export type PostProps = {
   post: PostType;
   handleSelectedPostClick: () => void;
 };
+
+export type CommentProps = {
+  comment: CommentType;
+  firstComment: boolean;
+};

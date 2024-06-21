@@ -12,10 +12,14 @@ code {
     monospace;
 }
 
-button {
+.cursor {
   cursor: pointer;
 }
 
 .margin-bottom {
   margin-bottom: 10px;
+}
+
+.border-line {
+  border-top: 1px solid #ccc;
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import PostsPage from "../src/components/PostsPage/PostsPage";
+import PostsPage from "./components/PostsPage";
 
 const App: React.FC = () => {
   return (
