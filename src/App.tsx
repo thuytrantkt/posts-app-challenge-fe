@@ -1,12 +1,8 @@
 import React from "react";
-import PostsPage from "./pages/posts-page/PostsPage";
+import Routers from "./routes/router";
 
 const App: React.FC = () => {
-  return (
-    <main>
-      <PostsPage />
-    </main>
-  );
+  return <Routers />;
 };
 
 export default App;

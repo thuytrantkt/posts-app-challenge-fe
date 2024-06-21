@@ -4,7 +4,8 @@ import { PostClickActionProps } from "../../types";
 import useFetchAPIs from "../../hooks/useFetchAPIs";
 import { Button, Card, CardContent, Container, Link } from "@mui/material";
 import PostDetail from "../../components/PostDetail/PostDetails";
-const SelectedPost = ({
+
+const SelectedPostPage = ({
   post,
   handleSelectedPostClick,
 }: PostClickActionProps) => {
@@ -60,4 +61,4 @@ const SelectedPost = ({
   );
 };
 
-export default SelectedPost;
+export default SelectedPostPage;
