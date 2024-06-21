@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CommentType, PostType } from "../types";
 import { BASE_BACKEND_URL, PAGE_SIZE } from "../utils/constant";
 
@@ -39,7 +39,7 @@ const useFetchAPIs = () => {
     return response.json();
   };
 
-  //   Fetch all of the comments
+  //   Fetch the rest of the comments after the initial fetch
   const fetchMoreComments = (hasNextPage: boolean, selectedPost: PostType) => {
     if (hasNextPage) {
       const pagesFetched = comments.length / PAGE_SIZE;
@@ -51,6 +51,19 @@ const useFetchAPIs = () => {
         .catch((error) => console.error("Failed to load comments:", error));
     }
   };
+
+  useEffect(() => {
+    const loadPosts = async () => {
+      try {
+        const fetchedPosts = await fetchPosts();
+        setPosts(fetchedPosts);
+      } catch (error) {
+        console.error("Failed to load posts:", error);
+      }
+    };
+
+    loadPosts();
+  }, []);
 
   return {
     fetchPosts,

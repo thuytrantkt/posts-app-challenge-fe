@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Post from "./Post";
 import SelectedPost from "./SelectedPost";
 import useFetchAPIs from "../hooks/useFetchAPIs";
@@ -8,21 +8,7 @@ import Container from "@mui/material/Container";
 import { Typography } from "@mui/material";
 
 const PostsPage = () => {
-  const { fetchPosts, posts, setPosts, selectedPost, setSelectedPost } =
-    useFetchAPIs();
-
-  useEffect(() => {
-    const loadPosts = async () => {
-      try {
-        const fetchedPosts = await fetchPosts();
-        setPosts(fetchedPosts);
-      } catch (error) {
-        console.error("Failed to load posts:", error);
-      }
-    };
-
-    loadPosts();
-  }, []);
+  const { posts, selectedPost, setSelectedPost } = useFetchAPIs();
 
   return (
     <>
