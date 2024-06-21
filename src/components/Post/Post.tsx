@@ -5,10 +5,21 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 
-const Post = ({ post, handleSelectedPostClick }: PostProps) => {
+const Post = ({
+  post,
+  handleSelectedPostClick,
+  handleSelectedPostKeyDown,
+}: PostProps) => {
   const { author, content, createdAt, title } = post;
   return (
-    <div className="cursor" onClick={handleSelectedPostClick}>
+    <div
+      role="button"
+      tabIndex={0}
+      aria-pressed="false"
+      className="cursor"
+      onClick={handleSelectedPostClick}
+      onKeyDown={(event) => handleSelectedPostKeyDown(event)}
+    >
       <Card variant="outlined">
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">

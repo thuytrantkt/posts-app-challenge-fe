@@ -20,7 +20,6 @@ const SelectedPost = ({ post, handleSelectedPostClick }: PostProps) => {
         setComments(comments);
       })
       .catch((error) => console.error("Failed to load comments:", error));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [post.id]);
 
   return (
@@ -32,7 +31,6 @@ const SelectedPost = ({ post, handleSelectedPostClick }: PostProps) => {
             variant="inherit"
             onClick={handleSelectedPostClick}
           >
-            {" "}
             Back
           </Link>
           <h2>{title}</h2>

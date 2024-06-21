@@ -1,6 +1,6 @@
 import React from "react";
 import Post from "../../components/Post/Post";
-import SelectedPost from "../selected-post-page/SelectedPostPage";
+import SelectedPost from "../../pages/selected-post-page/SelectedPostPage";
 import useFetchAPIs from "../../hooks/useFetchAPIs";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
@@ -27,6 +27,7 @@ const PostsPage = () => {
             <SelectedPost
               post={selectedPost}
               handleSelectedPostClick={() => setSelectedPost(null)}
+              handleSelectedPostKeyDown={() => {}}
             />
           )}
           {!selectedPost && (
@@ -39,13 +40,27 @@ const PostsPage = () => {
               >
                 Posts
               </Typography>
-              {posts.map((post) => (
-                <Post
-                  key={post.id}
-                  post={post}
-                  handleSelectedPostClick={() => setSelectedPost(post)}
-                />
-              ))}
+              {posts.map((post) => {
+                const handleSelectedPostKeyDown = (event: any) => {
+                  if (
+                    event.key === " " ||
+                    event.key === "Enter" ||
+                    event.key === "Spacebar"
+                  ) {
+                    // Prevent the default action to stop scrolling when space is pressed
+                    event.preventDefault();
+                    setSelectedPost(post);
+                  }
+                };
+                return (
+                  <Post
+                    key={post.id}
+                    post={post}
+                    handleSelectedPostClick={() => setSelectedPost(post)}
+                    handleSelectedPostKeyDown={handleSelectedPostKeyDown}
+                  />
+                );
+              })}
             </>
           )}
         </Box>

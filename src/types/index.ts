@@ -20,6 +20,7 @@ export interface CommentType {
 export type PostProps = {
   post: PostType;
   handleSelectedPostClick: () => void;
+  handleSelectedPostKeyDown: (event: any) => void;
 };
 
 export type CommentProps = {
