@@ -2,11 +2,12 @@ import React from "react";
 import cn from "classnames";
 import { CommentProps } from "./Comment.types";
 import { dateFormatted } from "../../utils/date-helper";
+import "./comment.css";
 
 const Comment = ({ comment, firstComment }: CommentProps) => {
   const { content, author, createdAt } = comment;
   return (
-    <div className={cn("comment-container", { hidden: !firstComment })}>
+    <div className={cn("comment-container", { "border-line": !firstComment })}>
       <p>
         {content} - <i>{author}</i>, {dateFormatted(createdAt)}
       </p>
