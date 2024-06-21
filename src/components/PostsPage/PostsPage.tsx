@@ -42,9 +42,9 @@ const PostsPage = () => {
   }
 
   return (
-    <div style={{ padding: 10 }}>
+    <div className="posts-page-container">
       <h1>Posts</h1>
-      <div className="posts-page-container">
+      <div className="posts-container">
         {posts.map((post) => (
           <Post
             key={post.id}

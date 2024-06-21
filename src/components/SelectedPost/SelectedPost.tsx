@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Comment from "../Comment/Comment";
-import { CommentType, PostType } from "../../types";
+import { CommentType, PostProps } from "../../types";
 import { BASE_BACKEND_URL, PAGE_SIZE } from "../../utils/constant";
 import { dateFormatted } from "../../utils/date-helper";
 import "./selectedpost.css";
@@ -25,13 +25,7 @@ const fetchCommentsForPost = async (
   return response.json();
 };
 
-const SelectedPost = ({
-  post,
-  handleSelectedPostClick,
-}: {
-  post: PostType;
-  handleSelectedPostClick: () => void;
-}) => {
+const SelectedPost = ({ post, handleSelectedPostClick }: PostProps) => {
   const { author, commentCount, content, createdAt, id, title } = post;
   const [comments, setComments] = useState<CommentType[]>([]);
 
@@ -61,7 +55,9 @@ const SelectedPost = ({
   return (
     <>
       <div className="selected-post-container">
-        <button onClick={handleSelectedPostClick}>Back</button>
+        <button type="button" onClick={handleSelectedPostClick}>
+          Back
+        </button>
         <h2 className="selected-post-heading">{title}</h2>
         <p className="margin-bottom">{content}</p>
         <p>
@@ -80,7 +76,9 @@ const SelectedPost = ({
           ))}
         </div>
         {hasNextPage && (
-          <button onClick={fetchMoreComments}>Fetch more comments</button>
+          <button type="submit" onClick={fetchMoreComments}>
+            Fetch more comments
+          </button>
         )}
       </div>
     </>

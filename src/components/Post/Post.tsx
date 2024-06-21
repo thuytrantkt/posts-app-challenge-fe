@@ -1,15 +1,9 @@
 import React from "react";
-import { PostType } from "../../types";
+import { PostProps } from "../../types";
 import { dateFormatted } from "../../utils/date-helper";
 import "./post.css";
 
-const Post = ({
-  post,
-  handleSelectedPostClick,
-}: {
-  post: PostType;
-  handleSelectedPostClick: () => void;
-}) => {
+const Post = ({ post, handleSelectedPostClick }: PostProps) => {
   const { author, content, createdAt, title } = post;
   return (
     <div className="post-container" onClick={handleSelectedPostClick}>

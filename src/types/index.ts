@@ -16,3 +16,8 @@ export interface CommentType {
   createdAt: string;
   postId: number;
 }
+
+export type PostProps = {
+  post: PostType;
+  handleSelectedPostClick: () => void;
+};
