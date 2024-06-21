@@ -3,6 +3,7 @@ import Comment from "../Comment/Comment";
 import { CommentType, PostType } from "../../types";
 import { BASE_BACKEND_URL, PAGE_SIZE } from "../../utils/constant";
 import { dateFormatted } from "../../utils/date-helper";
+import "./selectedpost.css";
 
 const fetchCommentsForPost = async (
   postId: number,
@@ -59,33 +60,17 @@ const SelectedPost = ({
 
   return (
     <>
-      <div style={{ padding: "20px" }}>
-        <button style={{ cursor: "pointer" }} onClick={handleSelectedPostClick}>
-          Back
-        </button>
-        <h2
-          style={{
-            fontSize: "1.5em",
-            fontWeight: "700",
-            marginBottom: "10px",
-          }}
-        >
-          {title}
-        </h2>
-        <p style={{ marginBottom: "10px" }}>{content}</p>
+      <div className="selected-post-container">
+        <button onClick={handleSelectedPostClick}>Back</button>
+        <h2 className="selected-post-heading">{title}</h2>
+        <p className="margin-bottom">{content}</p>
         <p>
           <strong>Author:</strong> {author}
         </p>
         <p>
           <strong>Posted on:</strong> {dateFormatted(createdAt)}
         </p>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            marginTop: "20px",
-          }}
-        >
+        <div className="selected-post-comment-container">
           {comments.map((comment, index) => (
             <Comment
               key={comment.id}
@@ -95,9 +80,7 @@ const SelectedPost = ({
           ))}
         </div>
         {hasNextPage && (
-          <button style={{ cursor: "pointer" }} onClick={fetchMoreComments}>
-            Fetch more comments
-          </button>
+          <button onClick={fetchMoreComments}>Fetch more comments</button>
         )}
       </div>
     </>

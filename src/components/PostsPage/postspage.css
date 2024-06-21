@@ -1,0 +1,7 @@
+.post-page-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  background-color: #fff;
+  gap: 20px;
+}

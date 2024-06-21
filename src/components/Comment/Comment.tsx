@@ -1,4 +1,5 @@
 import React from "react";
+import cn from "classnames";
 import { CommentType } from "../../types";
 import { dateFormatted } from "../../utils/date-helper";
 
@@ -11,13 +12,7 @@ const Comment = ({
 }) => {
   const { content, author, createdAt } = comment;
   return (
-    <div
-      style={{
-        borderTop: !firstComment ? "1px solid #ccc" : "none",
-        padding: "10px 0",
-        fontSize: "0.9em",
-      }}
-    >
+    <div className={cn("comment-container", { hidden: !firstComment })}>
       <p>
         {content} - <i>{author}</i>, {dateFormatted(createdAt)}
       </p>

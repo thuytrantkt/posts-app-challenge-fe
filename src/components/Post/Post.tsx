@@ -1,6 +1,7 @@
 import React from "react";
 import { PostType } from "../../types";
 import { dateFormatted } from "../../utils/date-helper";
+import "./post.css";
 
 const Post = ({
   post,
@@ -11,26 +12,9 @@ const Post = ({
 }) => {
   const { author, content, createdAt, title } = post;
   return (
-    <div
-      style={{
-        border: "1px solid #ccc",
-        borderRadius: "5px",
-        padding: "0px 20px",
-        cursor: "pointer",
-        userSelect: "none",
-      }}
-      onClick={handleSelectedPostClick}
-    >
-      <h2
-        style={{
-          fontSize: "1.5em",
-          fontWeight: "700",
-          marginBottom: "10px",
-        }}
-      >
-        {title}
-      </h2>
-      <p style={{ marginBottom: "10px" }}>{content}</p>
+    <div className="post-container" onClick={handleSelectedPostClick}>
+      <h2 className="post-heading">{title}</h2>
+      <p className="margin-bottom">{content}</p>
       <p>
         <strong>Author:</strong> {author}
       </p>

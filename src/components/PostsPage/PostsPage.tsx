@@ -3,6 +3,7 @@ import { PostType } from "../../types";
 import Post from "../Post/Post";
 import SelectedPost from "../SelectedPost/SelectedPost";
 import { BASE_BACKEND_URL } from "../../utils/constant";
+import "./postspage.css";
 
 const fetchPosts = async (): Promise<PostType[]> => {
   const response = await fetch(`${BASE_BACKEND_URL}/api/posts`);
@@ -43,15 +44,7 @@ const PostsPage = () => {
   return (
     <div style={{ padding: 10 }}>
       <h1>Posts</h1>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          marginBottom: "20px",
-          backgroundColor: "#fff",
-          gap: "20px",
-        }}
-      >
+      <div className="posts-page-container">
         {posts.map((post) => (
           <Post
             key={post.id}
