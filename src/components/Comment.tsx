@@ -1,5 +1,6 @@
 import React from "react";
 import { CommentType } from "../types";
+import { dateFormatted } from "../utils/date-helper";
 
 const Comment = ({
   comment,
@@ -8,6 +9,7 @@ const Comment = ({
   comment: CommentType;
   firstComment: boolean;
 }) => {
+  const { content, author, createdAt } = comment;
   return (
     <div
       style={{
@@ -17,8 +19,7 @@ const Comment = ({
       }}
     >
       <p>
-        {comment.content} - <i>{comment.author}</i>,{" "}
-        {new Date(comment.createdAt).toLocaleDateString()}
+        {content} - <i>{author}</i>, {dateFormatted(createdAt)}
       </p>
     </div>
   );

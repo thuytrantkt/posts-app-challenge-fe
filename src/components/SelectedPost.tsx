@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Comment from "./Comment";
 import { CommentType, PostType } from "../types";
 import { BASE_BACKEND_URL, PAGE_SIZE } from "../utils/constant";
+import { dateFormatted } from "../utils/date-helper";
 
 const fetchCommentsForPost = async (
   postId: number,
@@ -30,16 +31,16 @@ const SelectedPost = ({
   post: PostType;
   handleSelectedPostClick: () => void;
 }) => {
+  const { author, commentCount, content, createdAt, id, title } = post;
   const [comments, setComments] = useState<CommentType[]>([]);
 
-  const hasNextPage =
-    comments.length > 0 && comments.length < post.commentCount;
+  const hasNextPage = comments.length > 0 && comments.length < commentCount;
 
   const fetchMoreComments = () => {
     if (hasNextPage) {
       const pagesFetched = comments.length / PAGE_SIZE;
       const nextPage = pagesFetched + 1;
-      fetchCommentsForPost(post.id, nextPage)
+      fetchCommentsForPost(id, nextPage)
         .then((comments) => {
           setComments((prevComments) => [...prevComments, ...comments]);
         })
@@ -49,12 +50,12 @@ const SelectedPost = ({
 
   // Fetch the first page of comments on mount
   useEffect(() => {
-    fetchCommentsForPost(post.id)
+    fetchCommentsForPost(id)
       .then((comments) => {
         setComments(comments);
       })
       .catch((error) => console.error("Failed to load comments:", error));
-  }, [post.id]);
+  }, [id]);
 
   return (
     <>
@@ -69,15 +70,14 @@ const SelectedPost = ({
             marginBottom: "10px",
           }}
         >
-          {post.title}
+          {title}
         </h2>
-        <p style={{ marginBottom: "10px" }}>{post.content}</p>
+        <p style={{ marginBottom: "10px" }}>{content}</p>
         <p>
-          <strong>Author:</strong> {post.author}
+          <strong>Author:</strong> {author}
         </p>
         <p>
-          <strong>Posted on:</strong>{" "}
-          {new Date(post.createdAt).toLocaleDateString()}
+          <strong>Posted on:</strong> {dateFormatted(createdAt)}
         </p>
         <div
           style={{

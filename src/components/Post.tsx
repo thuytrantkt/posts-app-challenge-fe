@@ -1,5 +1,6 @@
 import React from "react";
 import { PostType } from "../types";
+import { dateFormatted } from "../utils/date-helper";
 
 const Post = ({
   post,
@@ -8,6 +9,7 @@ const Post = ({
   post: PostType;
   handleSelectedPostClick: () => void;
 }) => {
+  const { author, content, createdAt, title } = post;
   return (
     <div
       style={{
@@ -26,15 +28,14 @@ const Post = ({
           marginBottom: "10px",
         }}
       >
-        {post.title}
+        {title}
       </h2>
-      <p style={{ marginBottom: "10px" }}>{post.content}</p>
+      <p style={{ marginBottom: "10px" }}>{content}</p>
       <p>
-        <strong>Author:</strong> {post.author}
+        <strong>Author:</strong> {author}
       </p>
       <p>
-        <strong>Posted on:</strong>{" "}
-        {new Date(post.createdAt).toLocaleDateString()}
+        <strong>Posted on:</strong> {dateFormatted(createdAt)}
       </p>
     </div>
   );
