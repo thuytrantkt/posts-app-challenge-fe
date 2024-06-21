@@ -19,9 +19,19 @@ export interface CommentType {
 
 export type PostProps = {
   post: PostType;
-  handleSelectedPostClick: () => void;
-  handleSelectedPostKeyDown: (event: any) => void;
 };
+
+export interface PostDetaiProps extends PostProps {
+  hasPaddingX?: boolean;
+}
+
+export interface PostClickActionProps extends PostProps {
+  handleSelectedPostClick: () => void;
+}
+
+export interface PostEventActionProps extends PostProps, PostClickActionProps {
+  handleSelectedPostKeyDown?: (event: any) => void;
+}
 
 export type CommentProps = {
   comment: CommentType;

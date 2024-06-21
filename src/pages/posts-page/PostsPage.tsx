@@ -13,7 +13,7 @@ const PostsPage = () => {
   return (
     <>
       <CssBaseline />
-      <Container maxWidth="md">
+      <Container maxWidth="md" sx={{ paddingY: 8 }}>
         <Box
           sx={{
             bgcolor: "#fff",
@@ -27,7 +27,6 @@ const PostsPage = () => {
             <SelectedPost
               post={selectedPost}
               handleSelectedPostClick={() => setSelectedPost(null)}
-              handleSelectedPostKeyDown={() => {}}
             />
           )}
           {!selectedPost && (

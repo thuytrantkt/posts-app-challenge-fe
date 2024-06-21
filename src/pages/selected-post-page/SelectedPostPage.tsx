@@ -1,14 +1,15 @@
 import React, { useEffect } from "react";
 import Comment from "../../components/Comment/Comment";
-import { PostProps } from "../../types";
-import { dateFormatted } from "../../utils/helpers/date-helper";
+import { PostClickActionProps } from "../../types";
 import useFetchAPIs from "../../hooks/useFetchAPIs";
 import { Button, Card, CardContent, Container, Link } from "@mui/material";
-const SelectedPost = ({ post, handleSelectedPostClick }: PostProps) => {
+import PostDetail from "../../components/PostDetail/PostDetails";
+const SelectedPost = ({
+  post,
+  handleSelectedPostClick,
+}: PostClickActionProps) => {
   const { fetchCommentsForPost, fetchMoreComments, comments, setComments } =
     useFetchAPIs();
-
-  const { title, content, author, createdAt } = post;
 
   const hasNextPage =
     comments.length > 0 && post && comments.length < post.commentCount;
@@ -27,20 +28,14 @@ const SelectedPost = ({ post, handleSelectedPostClick }: PostProps) => {
       <Card variant="outlined">
         <CardContent>
           <Link
+            type="button"
             component="button"
             variant="inherit"
             onClick={handleSelectedPostClick}
           >
             Back
           </Link>
-          <h2>{title}</h2>
-          <p>{content}</p>
-          <p>
-            <strong>Author:</strong> {author}
-          </p>
-          <p>
-            <strong>Posted on:</strong> {post && dateFormatted(createdAt)}
-          </p>
+          <PostDetail post={post} hasPaddingX={false} />
           <div>
             {comments.map((comment, index) => (
               <Comment
@@ -52,6 +47,7 @@ const SelectedPost = ({ post, handleSelectedPostClick }: PostProps) => {
           </div>
           {hasNextPage && (
             <Button
+              type="button"
               variant="contained"
               onClick={() => fetchMoreComments(hasNextPage, post)}
             >
