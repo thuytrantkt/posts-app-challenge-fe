@@ -3,15 +3,20 @@ import Post from "../../components/Post/Post";
 import useFetchAPIs from "../../hooks/useFetchAPIs";
 import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import Loading from "../../components/Loading/Loading";
+import Alerts from "../../components/Alert/Alert";
 
 const PostsPage = () => {
   const navigate = useNavigate();
-  const { posts } = useFetchAPIs();
+  const { posts, openAlert } = useFetchAPIs();
+
   return (
     <>
       <Typography gutterBottom variant="h2" component="h1" textAlign="center">
         Posts
       </Typography>
+      {openAlert && <Alerts />}
+      {posts.length === 0 && <Loading />}
       {posts.map((post) => {
         const handleSelectedPost = () => {
           navigate(`/posts/${post.id}`, {

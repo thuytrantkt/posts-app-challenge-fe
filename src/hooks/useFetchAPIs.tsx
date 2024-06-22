@@ -10,6 +10,7 @@ const useFetchAPIs = () => {
   const [posts, setPosts] = useState<PostType[]>([]);
   const [selectedPost, setSelectedPost] = useState<PostType | null>(null);
   const [comments, setComments] = useState<CommentType[]>([]);
+  const [openAlert, setOpenAlert] = useState(false);
 
   // Fetch all posts
   const fetchPosts = async (): Promise<PostType[]> => {
@@ -51,7 +52,10 @@ const useFetchAPIs = () => {
         .then((comments) => {
           setComments((prevComments) => [...prevComments, ...comments]);
         })
-        .catch((error) => console.error("Failed to load comments:", error));
+        .catch((error) => {
+          console.error("Failed to load comments:", error);
+          setOpenAlert(true);
+        });
     }
   };
 
@@ -62,6 +66,7 @@ const useFetchAPIs = () => {
         setPosts(fetchedPosts);
       } catch (error) {
         console.error("Failed to load posts:", error);
+        setOpenAlert(true);
       }
     };
 
@@ -81,7 +86,10 @@ const useFetchAPIs = () => {
         .then((comments) => {
           setComments(comments);
         })
-        .catch((error) => console.error("Failed to load comments:", error));
+        .catch((error) => {
+          console.error("Failed to load comments:", error);
+          setOpenAlert(true);
+        });
     }
   }, [selectedPost?.id]);
 
@@ -95,6 +103,8 @@ const useFetchAPIs = () => {
     setSelectedPost,
     comments,
     setComments,
+    openAlert,
+    setOpenAlert,
   };
 };
 

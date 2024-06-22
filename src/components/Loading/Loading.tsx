@@ -6,12 +6,7 @@ import { Grid } from "@mui/material";
 const Loading = () => {
   return (
     <Layout>
-      <Grid
-        container
-        justifyContent="center"
-        alignItems="center"
-        height="100vh"
-      >
+      <Grid container justifyContent="center" height="100vh">
         <CircularProgress size={80} />
       </Grid>
     </Layout>
