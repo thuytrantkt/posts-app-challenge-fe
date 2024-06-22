@@ -1,5 +1,8 @@
 // src/types/index.ts
 
+import { ReactNode } from "react";
+import { JsxElement } from "typescript";
+
 export interface PostType {
   id: number;
   title: string;
@@ -16,24 +19,22 @@ export interface CommentType {
   createdAt: string;
   postId: number;
 }
-
-export type PostProps = {
+export interface PostDetaiProps {
   post: PostType;
-};
-
-export interface PostDetaiProps extends PostProps {
   hasPaddingX?: boolean;
 }
 
-export interface PostClickActionProps extends PostProps {
+export interface PostEventActionProps {
+  post: PostType;
   handleSelectedPostClick: () => void;
-}
-
-export interface PostEventActionProps extends PostProps, PostClickActionProps {
   handleSelectedPostKeyDown?: (event: any) => void;
 }
 
 export type CommentProps = {
   comment: CommentType;
   firstComment: boolean;
+};
+
+export type LayoutProps = {
+  children?: JSX.Element;
 };

@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import useFetchAPIs from "../hooks/useFetchAPIs";
 import Layout from "../components/Layout/Layout";
+import NotFoundPage from "../pages/not-found-page/NotFoundPage";
 
 const PostsPage = React.lazy(() => import("../pages/posts-page/PostsPage"));
 const SelectedPostPage = React.lazy(
@@ -19,6 +20,7 @@ const Routers = () => {
           <Route path="/posts/:postId" element={<SelectedPostPage />} />
         )}
       </Route>
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 };

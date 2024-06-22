@@ -1,7 +1,8 @@
 import { Box, Container, CssBaseline } from "@mui/material";
 import { Outlet } from "react-router-dom";
+import { LayoutProps } from "../../types";
 
-const Layout = () => {
+const Layout = ({ children }: LayoutProps) => {
   return (
     <main>
       <CssBaseline />
@@ -15,6 +16,7 @@ const Layout = () => {
             gap: 2,
           }}
         >
+          {children}
           <Outlet />
         </Box>
       </Container>
