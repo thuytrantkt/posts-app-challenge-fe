@@ -91,7 +91,7 @@ const useFetchAPIs = () => {
           setOpenAlert(true);
         });
     }
-  }, [selectedPost?.id]);
+  }, [selectedPost]);
 
   return {
     fetchPosts,
