@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import useFetchAPIs from "../hooks/useFetchAPIs";
+import Layout from "../components/Layout/Layout";
 
 const PostsPage = React.lazy(() => import("../pages/posts-page/PostsPage"));
 const SelectedPostPage = React.lazy(
@@ -8,21 +9,16 @@ const SelectedPostPage = React.lazy(
 );
 
 const Routers = () => {
-  const { selectedPost, setSelectedPost } = useFetchAPIs();
+  const { selectedPost } = useFetchAPIs();
+
   return (
     <Routes>
-      <Route index path="posts" element={<PostsPage />} />
-      {selectedPost && (
-        <Route
-          path="posts/:id"
-          element={
-            <SelectedPostPage
-              post={selectedPost}
-              handleSelectedPostClick={() => setSelectedPost(null)}
-            />
-          }
-        />
-      )}
+      <Route path="/" element={<Layout />}>
+        <Route index path="/posts" element={<PostsPage />} />
+        {selectedPost && (
+          <Route path="/posts/:postId" element={<SelectedPostPage />} />
+        )}
+      </Route>
     </Routes>
   );
 };

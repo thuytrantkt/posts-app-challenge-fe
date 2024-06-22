@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 import { CommentType, PostType } from "../types";
 import { BASE_BACKEND_URL, PAGE_SIZE } from "../utils/helpers/constant";
+import { useLocation } from "react-router-dom";
 
 const useFetchAPIs = () => {
+  const location = useLocation();
+  const post = location?.state?.post;
+
   const [posts, setPosts] = useState<PostType[]>([]);
   const [selectedPost, setSelectedPost] = useState<PostType | null>(null);
   const [comments, setComments] = useState<CommentType[]>([]);
@@ -28,9 +32,8 @@ const useFetchAPIs = () => {
       page: pageNumber.toString(),
     });
 
-    const response = await fetch(
-      `${BASE_BACKEND_URL}/api/posts/${postId}/comments?${params}`
-    );
+    const url = `${BASE_BACKEND_URL}/api/posts/${postId}/comments?${params}`;
+    const response = await fetch(url);
 
     if (!response.ok) {
       throw new Error("Failed to fetch comments");
@@ -64,6 +67,23 @@ const useFetchAPIs = () => {
 
     loadPosts();
   }, []);
+
+  useEffect(() => {
+    if (post) {
+      setSelectedPost(post);
+    }
+  }, [post]);
+
+  // Fetch the first page of comments on mount
+  useEffect(() => {
+    if (selectedPost) {
+      fetchCommentsForPost(selectedPost.id)
+        .then((comments) => {
+          setComments(comments);
+        })
+        .catch((error) => console.error("Failed to load comments:", error));
+    }
+  }, [selectedPost?.id]);
 
   return {
     fetchPosts,
