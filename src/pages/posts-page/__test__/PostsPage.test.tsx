@@ -38,21 +38,13 @@ const mockPostsData = [
 ];
 
 describe("PostsPage", () => {
-  let fetchMock: any = undefined;
-
-  beforeEach(() => {});
-
-  afterEach(() => {
-    jest.restoreAllMocks();
-  });
-
   const fetchPosts = async (): Promise<PostType[]> => {
     const response = await fetch(`${BASE_BACKEND_URL}/api/posts`);
     return response.json();
   };
 
   it("fetches a list of posts", async () => {
-    fetchMock = jest.spyOn(global, "fetch").mockImplementation(
+    const fetchMock = jest.spyOn(global, "fetch").mockImplementation(
       jest.fn(() =>
         Promise.resolve({
           ok: true,
@@ -69,11 +61,11 @@ describe("PostsPage", () => {
     expect(Array.isArray(response)).toEqual(true);
     expect(response.length).toEqual(4);
 
-    jest.resetAllMocks;
+    jest.clearAllMocks();
   });
 
   it("does not fetch a list of posts", async () => {
-    fetchMock = jest.spyOn(global, "fetch").mockImplementation(
+    const fetchMock = jest.spyOn(global, "fetch").mockImplementation(
       jest.fn(() =>
         Promise.resolve({
           ok: false,
@@ -90,6 +82,6 @@ describe("PostsPage", () => {
     expect(Array.isArray(response)).toEqual(true);
     expect(response.length).toEqual(0);
 
-    jest.resetAllMocks;
+    jest.clearAllMocks();
   });
 });

@@ -45,9 +45,13 @@ const useFetchAPIs = () => {
   };
 
   //   Fetch the rest of the comments after the initial fetch
-  const fetchMoreComments = (hasNextPage: boolean, selectedPost: PostType) => {
+  const fetchMoreComments = (
+    hasNextPage: boolean,
+    selectedPost: PostType,
+    commentsList: CommentType[]
+  ) => {
     if (hasNextPage) {
-      const pagesFetched = comments.length / PAGE_SIZE;
+      const pagesFetched = commentsList.length / PAGE_SIZE;
       const nextPage = pagesFetched + 1;
       setIsLoading(true);
       fetchCommentsForPost(selectedPost?.id, nextPage)

@@ -18,7 +18,7 @@ const SelectedPostPage = () => {
 
   const handleFetchMoreComments = (hasNextPage: boolean) => () => {
     if (selectedPost) {
-      fetchMoreComments(hasNextPage, selectedPost);
+      fetchMoreComments(hasNextPage, selectedPost, comments);
     }
   };
 
