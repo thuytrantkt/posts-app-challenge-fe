@@ -2,7 +2,7 @@ import { render } from "@testing-library/react";
 import Alert from "../Alert";
 import { BrowserRouter } from "react-router-dom";
 
-it("renders PostDetail component properly", () => {
+it("renders Alert component properly", () => {
   const view = render(
     <BrowserRouter>
       <Alert />

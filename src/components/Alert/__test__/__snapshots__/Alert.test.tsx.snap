@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders PostDetail component properly 1`] = `
+exports[`renders Alert component properly 1`] = `
 Object {
   "asFragment": [Function],
   "baseElement": <body>
