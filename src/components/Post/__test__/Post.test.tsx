@@ -10,7 +10,7 @@ const postMockData = {
   title: "First Post",
 };
 
-describe("Post", () => {
+describe("Post component", () => {
   it("renders Post component properly", () => {
     const view = render(
       <Post post={postMockData} handleSelectedPostClick={() => {}} />

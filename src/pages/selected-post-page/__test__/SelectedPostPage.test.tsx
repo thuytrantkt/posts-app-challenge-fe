@@ -1,7 +1,17 @@
+import React from "react";
 import { BASE_BACKEND_URL, PAGE_SIZE } from "../../../utils/helpers/constant";
-import { CommentType, PostType } from "../../../types";
+import { CommentType } from "../../../types";
+import { render, fireEvent, screen } from "@testing-library/react";
+import SelectedPostPage from "../SelectedPostPage";
+import useFetchAPIs from "../../../hooks/useFetchAPIs";
 
-const mockSelectedPostData = {
+jest.mock("../../../hooks/useFetchAPIs");
+
+const mockUseFetchAPIs = useFetchAPIs as jest.MockedFunction<
+  typeof useFetchAPIs
+>;
+
+const mockSelectedPostDataData = {
   author: "John Smith",
   commentCount: 4,
   content: "This is my very first post",
@@ -149,5 +159,66 @@ describe("SelectedPostPage", () => {
     expect(response.length).toEqual(0);
 
     jest.resetAllMocks;
+  });
+
+  beforeEach(() => {
+    mockUseFetchAPIs.mockReturnValue({
+      isLoading: false,
+      selectedPost: mockSelectedPostDataData,
+      comments: mockCommentsDataPageOne,
+      fetchMoreComments: jest.fn(),
+      openAlert: false,
+    });
+  });
+
+  it("should render the selected post and comments", () => {
+    render(<SelectedPostPage />);
+
+    expect(
+      screen.getByText(mockSelectedPostDataData.title)
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(mockSelectedPostDataData.content)
+    ).toBeInTheDocument();
+
+    mockCommentsDataPageOne.forEach((comment) => {
+      expect(screen.getByText(comment.content)).toBeInTheDocument();
+    });
+  });
+
+  it('should call fetchMoreComments when "Fetch more comments" button is clicked', () => {
+    const mockFetchMoreComments = jest.fn();
+    mockUseFetchAPIs.mockReturnValue({
+      isLoading: false,
+      selectedPost: mockSelectedPostData,
+      comments: mockComments,
+      fetchMoreComments: mockFetchMoreComments,
+      openAlert: false,
+    });
+
+    render(<SelectedPostPage />);
+
+    const fetchMoreCommentsButton = screen.getByText("Fetch more comments");
+
+    fireEvent.click(fetchMoreCommentsButton);
+
+    expect(mockFetchMoreComments).toHaveBeenCalledTimes(1);
+    expect(mockFetchMoreComments).toHaveBeenCalledWith(true);
+  });
+
+  it('should not render the "Fetch more comments" button if hasNextPage is false', () => {
+    mockUseFetchAPIs.mockReturnValue({
+      isLoading: false,
+      selectedPost: mockSelectedPostData,
+      comments: mockComments,
+      fetchMoreComments: jest.fn(),
+      openAlert: false,
+    });
+
+    render(<SelectedPostPage />);
+
+    const fetchMoreCommentsButton = screen.queryByText("Fetch more comments");
+
+    expect(fetchMoreCommentsButton).toBeNull();
   });
 });

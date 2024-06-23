@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Post renders Post component properly 1`] = `
+exports[`Post component renders Post component properly 1`] = `
 Object {
   "asFragment": [Function],
   "baseElement": <body>
