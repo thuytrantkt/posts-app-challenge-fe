@@ -22,7 +22,7 @@ const SelectedPostPage = () => {
     }
   };
 
-  if (!selectedPost) return;
+  if (!selectedPost) return <></>;
 
   return (
     <Container maxWidth="md" sx={{ pt: 6 }}>
