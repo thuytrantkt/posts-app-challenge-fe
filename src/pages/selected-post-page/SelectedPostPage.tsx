@@ -8,13 +8,19 @@ import Loading from "../../components/Loading/Loading";
 import Alerts from "../../components/Alert/Alert";
 
 const SelectedPostPage = () => {
-  const { selectedPost, comments, fetchMoreComments, openAlert } =
+  const { isLoading, selectedPost, comments, fetchMoreComments, openAlert } =
     useFetchAPIs();
 
   const hasNextPage =
     comments.length > 0 &&
     selectedPost &&
     comments.length < selectedPost.commentCount;
+
+  const handleFetchMoreComments = (hasNextPage: boolean) => () => {
+    if (selectedPost) {
+      fetchMoreComments(hasNextPage, selectedPost);
+    }
+  };
 
   if (!selectedPost) return;
 
@@ -26,7 +32,7 @@ const SelectedPostPage = () => {
           <Link to="/posts">Back</Link>
           <PostDetail post={selectedPost} hasPaddingX={false} />
           <div>
-            {comments.length === 0 && <Loading />}
+            {isLoading && <Loading />}
             {comments.map((comment, index) => (
               <Comment
                 key={comment.id}
@@ -39,7 +45,7 @@ const SelectedPostPage = () => {
             <Button
               type="button"
               variant="contained"
-              onClick={() => fetchMoreComments(hasNextPage, selectedPost)}
+              onClick={handleFetchMoreComments(hasNextPage)}
             >
               Fetch more comments
             </Button>

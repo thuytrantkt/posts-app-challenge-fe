@@ -11,6 +11,7 @@ const useFetchAPIs = () => {
   const [selectedPost, setSelectedPost] = useState<PostType | null>(null);
   const [comments, setComments] = useState<CommentType[]>([]);
   const [openAlert, setOpenAlert] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Fetch all posts
   const fetchPosts = async (): Promise<PostType[]> => {
@@ -48,9 +49,11 @@ const useFetchAPIs = () => {
     if (hasNextPage) {
       const pagesFetched = comments.length / PAGE_SIZE;
       const nextPage = pagesFetched + 1;
+      setIsLoading(true);
       fetchCommentsForPost(selectedPost?.id, nextPage)
         .then((comments) => {
           setComments((prevComments) => [...prevComments, ...comments]);
+          setIsLoading(false);
         })
         .catch((error) => {
           console.error("Failed to load comments:", error);
@@ -62,8 +65,10 @@ const useFetchAPIs = () => {
   useEffect(() => {
     const loadPosts = async () => {
       try {
+        setIsLoading(true);
         const fetchedPosts = await fetchPosts();
         setPosts(fetchedPosts);
+        setIsLoading(false);
       } catch (error) {
         console.error("Failed to load posts:", error);
         setOpenAlert(true);
@@ -82,9 +87,11 @@ const useFetchAPIs = () => {
   // Fetch the first page of comments on mount
   useEffect(() => {
     if (selectedPost) {
+      setIsLoading(true);
       fetchCommentsForPost(selectedPost.id)
         .then((comments) => {
           setComments(comments);
+          setIsLoading(false);
         })
         .catch((error) => {
           console.error("Failed to load comments:", error);
@@ -105,6 +112,7 @@ const useFetchAPIs = () => {
     setComments,
     openAlert,
     setOpenAlert,
+    isLoading,
   };
 };
 
