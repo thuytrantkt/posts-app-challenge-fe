@@ -117,6 +117,7 @@ const useFetchAPIs = () => {
     openAlert,
     setOpenAlert,
     isLoading,
+    setIsLoading,
   };
 };
 

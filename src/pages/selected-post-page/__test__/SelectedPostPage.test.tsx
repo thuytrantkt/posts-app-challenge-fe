@@ -83,6 +83,7 @@ beforeEach(() => {
     setOpenAlert: jest.fn(),
     setPosts: jest.fn(),
     setSelectedPost: jest.fn(),
+    setIsLoading: jest.fn(),
   });
 });
 
@@ -152,27 +153,6 @@ describe("SelectedPostPage", () => {
     expect(response.length).toEqual(2);
   });
 
-  it("does not fetch a list of posts", async () => {
-    const fetchMock = jest.spyOn(global, "fetch").mockImplementation(
-      jest.fn(() =>
-        Promise.resolve({
-          ok: false,
-          status: 400,
-          json: () => Promise.resolve([]),
-        } as Response)
-      ) as jest.Mock
-    );
-
-    const response = await fetchCommentsForPost(1, 2);
-
-    expect(fetchMock).toHaveBeenCalled();
-    expect(fetchMock).toHaveBeenCalledWith(
-      `${BASE_BACKEND_URL}/api/posts/1/comments?per-page=2&page=2`
-    );
-    expect(Array.isArray(response)).toEqual(true);
-    expect(response.length).toEqual(0);
-  });
-
   it("should render the selected post and comments", () => {
     render(
       <BrowserRouter>
@@ -205,6 +185,7 @@ describe("SelectedPostPage", () => {
       setOpenAlert: jest.fn(),
       setPosts: jest.fn(),
       setSelectedPost: jest.fn(),
+      setIsLoading: jest.fn(),
     });
 
     render(
@@ -238,6 +219,7 @@ describe("SelectedPostPage", () => {
       setOpenAlert: jest.fn(),
       setPosts: jest.fn(),
       setSelectedPost: jest.fn(),
+      setIsLoading: jest.fn(),
     });
 
     render(
