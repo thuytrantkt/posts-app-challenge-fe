@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Loading from "../../components/Loading/Loading";
 import Alerts from "../../components/Alert/Alert";
 import { PostType } from "../../types";
+import Layout from "../../components/Layout/Layout";
 
 const PostsPage = () => {
   const navigate = useNavigate();

@@ -1,23 +1,24 @@
-import React from "react";
+import React, { lazy } from "react";
 import { Route, Routes } from "react-router-dom";
-const LayoutPage = React.lazy(() => import("../components/Layout/Layout"));
-const PostsPage = React.lazy(() => import("../pages/posts-page/PostsPage"));
-const SelectedPostPage = React.lazy(
+const HomePage = lazy(() => import("../pages/home-page/HomePage"));
+const LayoutPage = lazy(() => import("../components/Layout/Layout"));
+const PostsPage = lazy(() => import("../pages/posts-page/PostsPage"));
+const SelectedPostPage = lazy(
   () => import("../pages/selected-post-page/SelectedPostPage")
 );
-const NotFoundPage = React.lazy(
-  () => import("../pages/not-found-page/NotFoundPage")
-);
+const NotFoundPage = lazy(() => import("../pages/not-found-page/NotFoundPage"));
 
 const Routers = () => {
   return (
-    <Routes>
-      <Route path="/" element={<LayoutPage />}>
-        <Route index path="/posts" element={<PostsPage />} />
+    <LayoutPage>
+      <Routes>
+        <Route index path="/" element={<HomePage />} />
+
+        <Route path="/posts" element={<PostsPage />} />
         <Route path="/posts/:postId" element={<SelectedPostPage />} />
         <Route path="*" element={<NotFoundPage />} />
-      </Route>
-    </Routes>
+      </Routes>
+    </LayoutPage>
   );
 };
 
