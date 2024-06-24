@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders Comment component properly with the border line if this is not the first comment 1`] = `
+exports[`Comment component renders Comment component properly with the border line if this is not the first comment 1`] = `
 Object {
   "asFragment": [Function],
   "baseElement": <body>
@@ -89,7 +89,7 @@ Object {
 }
 `;
 
-exports[`renders Comment component properly without the border line if this is the first comment 1`] = `
+exports[`Comment component renders Comment component properly without the border line if this is the first comment 1`] = `
 Object {
   "asFragment": [Function],
   "baseElement": <body>
