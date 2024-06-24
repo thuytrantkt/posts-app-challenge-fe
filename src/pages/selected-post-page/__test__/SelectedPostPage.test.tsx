@@ -1,9 +1,10 @@
 import React from "react";
 import { BASE_BACKEND_URL, PAGE_SIZE } from "../../../utils/helpers/constant";
-import { CommentType } from "../../../types";
+import { CommentType, PostType } from "../../../types";
 import { render, fireEvent, screen } from "@testing-library/react";
 import SelectedPostPage from "../SelectedPostPage";
 import useFetchAPIs from "../../../hooks/useFetchAPIs";
+import { BrowserRouter } from "react-router-dom";
 
 jest.mock("../../../hooks/useFetchAPIs");
 
@@ -11,7 +12,7 @@ const mockUseFetchAPIs = useFetchAPIs as jest.MockedFunction<
   typeof useFetchAPIs
 >;
 
-const mockSelectedPostDataData = {
+const mockSelectedPostData = {
   author: "John Smith",
   commentCount: 4,
   content: "This is my very first post",
@@ -25,15 +26,15 @@ const mockCommentsDataPageOne = [
     author: "Steven Anderson",
     content: "This is insightful, thanks for sharing!",
     createdAt: "Thu, 15 Feb 2024 17:40:30 GMT",
-    id: 3,
-    postId: 3,
+    id: 1,
+    postId: 1,
   },
   {
     author: "Susan Davis",
     content: "I have a different perspective on this.",
     createdAt: "Thu, 15 Feb 2024 17:40:30 GMT",
-    id: 4,
-    postId: 4,
+    id: 2,
+    postId: 2,
   },
 ];
 
@@ -68,6 +69,25 @@ const fetchCommentsForPost = async (
   return response.json();
 };
 
+beforeEach(() => {
+  mockUseFetchAPIs.mockReturnValue({
+    isLoading: false,
+    selectedPost: mockSelectedPostData,
+    comments: mockCommentsDataPageOne,
+    fetchMoreComments: jest.fn(),
+    openAlert: false,
+    fetchCommentsForPost: jest.fn(),
+    fetchPosts: jest.fn(),
+    posts: [],
+    setComments: jest.fn(),
+    setOpenAlert: jest.fn(),
+    setPosts: jest.fn(),
+    setSelectedPost: jest.fn(),
+  });
+});
+
+afterAll(() => jest.resetAllMocks());
+
 describe("SelectedPostPage", () => {
   it("fetches a selected post with the first page of comments loading", async () => {
     const fetchMock = jest.spyOn(global, "fetch").mockImplementation(
@@ -88,8 +108,6 @@ describe("SelectedPostPage", () => {
     );
     expect(Array.isArray(response)).toEqual(true);
     expect(response.length).toEqual(2);
-
-    jest.resetAllMocks;
   });
 
   it("does not fetch a list of posts", async () => {
@@ -111,8 +129,6 @@ describe("SelectedPostPage", () => {
     );
     expect(Array.isArray(response)).toEqual(true);
     expect(response.length).toEqual(0);
-
-    jest.clearAllMocks();
   });
 
   it("fetches a selected post with the second page of comments loading", async () => {
@@ -134,8 +150,6 @@ describe("SelectedPostPage", () => {
     );
     expect(Array.isArray(response)).toEqual(true);
     expect(response.length).toEqual(2);
-
-    jest.clearAllMocks();
   });
 
   it("does not fetch a list of posts", async () => {
@@ -157,33 +171,23 @@ describe("SelectedPostPage", () => {
     );
     expect(Array.isArray(response)).toEqual(true);
     expect(response.length).toEqual(0);
-
-    jest.resetAllMocks;
-  });
-
-  beforeEach(() => {
-    mockUseFetchAPIs.mockReturnValue({
-      isLoading: false,
-      selectedPost: mockSelectedPostDataData,
-      comments: mockCommentsDataPageOne,
-      fetchMoreComments: jest.fn(),
-      openAlert: false,
-    });
   });
 
   it("should render the selected post and comments", () => {
-    render(<SelectedPostPage />);
+    render(
+      <BrowserRouter>
+        <SelectedPostPage />
+      </BrowserRouter>
+    );
 
+    expect(screen.getByText(mockSelectedPostData.title)).toBeInTheDocument();
+    expect(screen.getByText(mockSelectedPostData.content)).toBeInTheDocument();
     expect(
-      screen.getByText(mockSelectedPostDataData.title)
+      screen.getByText(/This is insightful, thanks for sharing!/i)
     ).toBeInTheDocument();
     expect(
-      screen.getByText(mockSelectedPostDataData.content)
+      screen.getByText(/I have a different perspective on this./i)
     ).toBeInTheDocument();
-
-    mockCommentsDataPageOne.forEach((comment) => {
-      expect(screen.getByText(comment.content)).toBeInTheDocument();
-    });
   });
 
   it('should call fetchMoreComments when "Fetch more comments" button is clicked', () => {
@@ -191,31 +195,56 @@ describe("SelectedPostPage", () => {
     mockUseFetchAPIs.mockReturnValue({
       isLoading: false,
       selectedPost: mockSelectedPostData,
-      comments: mockComments,
+      comments: mockCommentsDataPageOne,
       fetchMoreComments: mockFetchMoreComments,
       openAlert: false,
+      fetchCommentsForPost: jest.fn(),
+      fetchPosts: jest.fn(),
+      posts: [],
+      setComments: jest.fn(),
+      setOpenAlert: jest.fn(),
+      setPosts: jest.fn(),
+      setSelectedPost: jest.fn(),
     });
 
-    render(<SelectedPostPage />);
+    render(
+      <BrowserRouter>
+        <SelectedPostPage />
+      </BrowserRouter>
+    );
 
     const fetchMoreCommentsButton = screen.getByText("Fetch more comments");
-
     fireEvent.click(fetchMoreCommentsButton);
 
     expect(mockFetchMoreComments).toHaveBeenCalledTimes(1);
-    expect(mockFetchMoreComments).toHaveBeenCalledWith(true);
+    expect(mockFetchMoreComments).toHaveBeenCalledWith(
+      true,
+      mockSelectedPostData,
+      mockCommentsDataPageOne
+    );
   });
 
   it('should not render the "Fetch more comments" button if hasNextPage is false', () => {
     mockUseFetchAPIs.mockReturnValue({
       isLoading: false,
       selectedPost: mockSelectedPostData,
-      comments: mockComments,
+      comments: [],
       fetchMoreComments: jest.fn(),
       openAlert: false,
+      fetchCommentsForPost: jest.fn(),
+      fetchPosts: jest.fn(),
+      posts: [],
+      setComments: jest.fn(),
+      setOpenAlert: jest.fn(),
+      setPosts: jest.fn(),
+      setSelectedPost: jest.fn(),
     });
 
-    render(<SelectedPostPage />);
+    render(
+      <BrowserRouter>
+        <SelectedPostPage />
+      </BrowserRouter>
+    );
 
     const fetchMoreCommentsButton = screen.queryByText("Fetch more comments");
 
