@@ -13,3 +13,5 @@
    ```
    npm start
    ```
+
+   Note: `colab-challenge-fe` should be associated with the back end that can be cloned from this repository [`colab-challenge-be`](https://github.com/thuytrantkt/colab-challenge-be). Please follow README in that repository to setup back end and run the server.
