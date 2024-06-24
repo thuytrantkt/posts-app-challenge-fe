@@ -15,7 +15,7 @@ const Post = ({
       tabIndex={0}
       className="cursor"
       onClick={handleSelectedPostClick}
-      onKeyDown={(event) => handleSelectedPostKeyDown(event)}
+      onKeyDown={handleSelectedPostKeyDown}
     >
       <Card variant="outlined">
         <CardContent>
