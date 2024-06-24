@@ -1,4 +1,4 @@
-import { dateFormatted } from "../utils/helpers/date-helper";
+import { dateFormatted } from "../helpers/date-helper";
 
 describe("dateFormatted", () => {
   it("should format the date correctly when given a valid date string", () => {
